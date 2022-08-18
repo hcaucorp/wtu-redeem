@@ -1,0 +1,32 @@
+<div class="parent">
+  <mat-card class="card">
+
+    <mat-card-header class="card-header"
+      *ngIf="(model$ | async).redemptionError?.message === ONE_PER_CUSTOMER; else generic_header">
+      <mat-card-title>Thank you for attending AI & BC Malta Summit</mat-card-title>
+      <mat-card-subtitle>You've already redeemed one promotional gift card!</mat-card-subtitle>
+    </mat-card-header>
+
+    <ng-template #generic_header>
+      <mat-card-header class="card-header">
+        <mat-card-title>Redemption failed</mat-card-title>
+        <mat-card-subtitle>Our Team has been notified</mat-card-subtitle>
+      </mat-card-header>
+    </ng-template>
+    <mat-card-content>
+      <p *ngIf="(model$ | async).redemptionError?.message === ONE_PER_CUSTOMER; else other_content">
+        Only one promotional gift card per customer, sorry 😢.
+      </p>
+      <ng-template #other_content>
+        <p>
+          If your voucher code is valid please try again and make sure that wallet address is correct.
+          Please contact us if you need assistance with your voucher. We will be happy to help.
+        </p>
+      </ng-template>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="navigateBack()">Back</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

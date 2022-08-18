@@ -1,0 +1,19 @@
+<div class="parent">
+  <mat-card class="card">
+    <mat-card-header class="card-header">
+      <mat-card-title>Voucher code redeemed successfully</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        We've sent your top up to address provided! Please check your wallet!
+      </p>
+      <p class="txid">Transaction {{ (model$ | async).redemptionResponse?.transactionId }} can be verified on any of blockchain exploers below:</p>
+    <ul>
+      <li *ngFor="let link of (model$ | async).redemptionResponse?.trackingUrls; let i = index"><a href="{{link}}" target="_blank">Link {{i+1}}</a></li>
+    </ul>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="navigateBack()">Back</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

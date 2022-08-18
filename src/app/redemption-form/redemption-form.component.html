@@ -1,0 +1,49 @@
+<div class="parent">
+  <h1>Use your voucher code</h1>
+</div>
+<div class="parent">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="main-form col-lg-6">
+    <div class="form-layout">
+      <div class="input-layer">
+        <mat-form-field appearance="outline" class="voucherCodeFormField">
+          <mat-label>Voucher code {{ form.controls.voucherCode.value }} </mat-label>
+          <input type="text" formControlName="voucherCode" placeholder="eg. wtubtc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+            matInput required class="voucherCodeInput">
+          <mat-error *ngIf="form.controls.voucherCode.errors?.required">you must enter a value</mat-error>
+          <mat-error *ngIf="form.controls.voucherCode.errors?.pattern">we don't recognize this voucher 💩</mat-error>
+          <mat-hint align="end" *ngIf="(model$ | async).voucherInfo as info">
+            <!-- redeemed, expired, valid -->
+            <span *ngIf="info.status === 'valid'" class="valid-message">voucher code is valid</span>
+            <span *ngIf="info.status === 'expired'" class="invalid-message">it expired</span>
+            <span *ngIf="info.status === 'redeemed'" class="invalid-message">already redeemed</span>
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="button-layer">
+        <button mat-raised-button type="submit"
+          *ngIf="(model$ | async).redemptionStatus != 'pending';else other_content"
+          [disabled]="!form.valid || (model$ | async).voucherInfo?.status != 'valid'"
+          class="btn btn-primary sendToButton">
+          Send to >
+        </button>
+        <ng-template #other_content>
+          <mat-progress-spinner mode="indeterminate" [diameter]="24"></mat-progress-spinner>
+        </ng-template>
+      </div>
+      <div class="input-layer">
+        <mat-form-field appearance="outline">
+          <mat-label>Wallet address</mat-label>
+          <input matInput type="text" class="form-control addressInput" required formControlName="destinationAddress"
+            placeholder="e.g. 1CuQ2hadahPMEt2S7cTTbuyo1AUK3Y3U7V">
+          <mat-error>you must enter a value</mat-error>
+          <mat-hint align="end"><a
+              href="https://www.wallettopup.co.uk/post/getting-started-with-bitcoin-and-creating-your-first-wallet" target="_parent">don't
+              have one?</a></mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <div class="logo-layer">
+    <img src="../../assets/logo.png" />
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.card {
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.card-header {
+    color: green;
+}
+
+.card-header-image {
+    background-image: url('../../assets/logo.png');
+    background-size: cover;
+}
+
+.parent {
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+}
